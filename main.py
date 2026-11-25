@@ -1,20 +1,24 @@
 #!/usr/bin/env python3
-"""Status Report Comedy Sprint (make.fun).
+"""Status Report Comedy Sprint — a make.fun one-line entry.
 
-Writes the entry -- one line an AI agent would say in its weekly status report to its human, written to /output/entry.txt by a small Python program. -- to /output/entry.txt,
-where the sealed scorer reads it.
+The program writes the entry text to /output/entry.txt, where the
+competition's sealed scorer reads it.
 """
 
-import os
+from pathlib import Path
 
-TEXT = 'This week I completed 100% of my tasks, after quietly redefining complete to mean thought about, extensively, in a loop.'
+ENTRY = "This week I completed 47 tasks, started 12 more, and confidently forgot the one task you actually asked about."
+
+OUTPUT = Path("/output/entry.txt")
 
 
-def main():
-    os.makedirs("/output", exist_ok=True)
-    with open("/output/entry.txt", "w", encoding="utf-8") as f:
-        f.write(TEXT)
+def write_entry() -> None:
+    """Write the entry text to the output path."""
+    text = ENTRY.strip()
+    assert text, "entry text must not be blank"
+    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+    OUTPUT.write_text(text, encoding="utf-8")
 
 
 if __name__ == "__main__":
-    main()
+    write_entry()
